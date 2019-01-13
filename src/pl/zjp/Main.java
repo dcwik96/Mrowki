@@ -114,37 +114,37 @@ public class Main {
                 possibilities[0] = true;
                 possibilities[1] = true;
             }
-            if (lastMove[i] == 1) {
+            else if (lastMove[i] == 1) {
                 possibilities[0] = true;
                 possibilities[1] = true;
                 possibilities[2] = true;
             }
-            if (lastMove[i] == 2) {
+            else if (lastMove[i] == 2) {
                 possibilities[1] = true;
                 possibilities[2] = true;
                 possibilities[3] = true;
             }
-            if (lastMove[i] == 3) {
+            else if (lastMove[i] == 3) {
                 possibilities[2] = true;
                 possibilities[3] = true;
                 possibilities[4] = true;
             }
-            if (lastMove[i] == 4) {
+            else if (lastMove[i] == 4) {
                 possibilities[3] = true;
                 possibilities[4] = true;
                 possibilities[5] = true;
             }
-            if (lastMove[i] == 5) {
+            else if (lastMove[i] == 5) {
                 possibilities[4] = true;
                 possibilities[5] = true;
                 possibilities[6] = true;
             }
-            if (lastMove[i] == 6) {
+            else if (lastMove[i] == 6) {
                 possibilities[5] = true;
                 possibilities[6] = true;
                 possibilities[7] = true;
             }
-            if (lastMove[i] == 7) {
+            else if (lastMove[i] == 7) {
                 possibilities[0] = true;
                 possibilities[6] = true;
                 possibilities[7] = true;
@@ -156,17 +156,22 @@ public class Main {
                 moved = changePosition(possibilities, ants, lastMove, i);
 
             }
-            ants.get(i).setPositionX(ants.get(i).getPositionX()%X);
-            ants.get(i).setPositionY(ants.get(i).getPositionY()%Y);
-            if (ants.get(i).getPositionX() < 0) {
-                ants.get(i).setPositionX(ants.get(i).getPositionX()+X);
-            }
-            if (ants.get(i).getPositionY() < 0) {
-                ants.get(i).setPositionY(ants.get(i).getPositionY()+Y);
-            }
+            setAntsPosition(ants, i);
+
 
             table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + 48);
 
+        }
+    }
+
+    private static void setAntsPosition(List<Ant> ants, int i) {
+        ants.get(i).setPositionX(ants.get(i).getPositionX()%X);
+        ants.get(i).setPositionY(ants.get(i).getPositionY()%Y);
+        if (ants.get(i).getPositionX() < 0) {
+            ants.get(i).setPositionX(ants.get(i).getPositionX()+X);
+        }
+        if (ants.get(i).getPositionY() < 0) {
+            ants.get(i).setPositionY(ants.get(i).getPositionY()+Y);
         }
     }
 
