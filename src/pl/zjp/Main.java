@@ -175,7 +175,6 @@ public class Main {
                     int rand = random.nextInt(8);
                     lastMove[i] = rand;
 
-                    boolean posibble = false;
                     if (rand == 0 && possible0) {
                         ants.get(i)[0]--;
                         moved = true;
