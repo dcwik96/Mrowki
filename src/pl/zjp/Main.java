@@ -27,8 +27,8 @@ public class Main {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-    private static final int x = 30;
-    private static final int y = 60;
+    private static final int X = 30;
+    private static final int Y = 60;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> colors = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Main {
         colors.add(ANSI_PURPLE_BACKGROUND);
         List<int[]> ants = new ArrayList<>();
 
-        char[][] table = new char[x][y];
+        char[][] table = new char[X][Y];
 
         boolean possible0 = false;
         boolean possible1 = false;
@@ -50,8 +50,8 @@ public class Main {
         boolean possible6 = false;
         boolean possible7 = false;
 
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+        for (int i = 0; i < X; i++) {
+            for (int j = 0; j < Y; j++) {
                 table[i][j] = ' ';
             }
         }
@@ -62,8 +62,8 @@ public class Main {
             coverage[i] = 0;
             Random random = new Random();
 
-            int newX = random.nextInt(x);
-            int newY = random.nextInt(y);
+            int newX = random.nextInt(X);
+            int newY = random.nextInt(Y);
             if (table[newX][newY] == ' ') {
                 ants.add(new int[]{newX, newY});
                 table[newX][newY] = Character.forDigit(i, 10);
@@ -84,8 +84,8 @@ public class Main {
                 System.out.print("\033[H\033[2J");
             }
 
-            for (int i = 0; i < x; i++) {
-                for (int j = 0; j < y; j++) {
+            for (int i = 0; i < X; i++) {
+                for (int j = 0; j < Y; j++) {
                     if (table[i][j] != ' ') {
                         System.out.print(colors.get(Character.digit(table[i][j], 10)) + " " + ANSI_RESET);
                         coverage[Character.digit(table[i][j], 10)]++;
@@ -97,7 +97,7 @@ public class Main {
             }
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
-                double avg = countAvgCoverage(coverage[i],x,y);
+                double avg = countAvgCoverage(coverage[i], X, Y);
                 System.out.println("Ant" + i + " coverage: " +  avg + "%");
                 coverage[i] = 0;
                 sumOfAverages += avg;
@@ -236,14 +236,14 @@ public class Main {
 
                     }
                 }
-                ants.get(i)[0] = ants.get(i)[0] % x;
-                ants.get(i)[1] = ants.get(i)[1] % y;
+                ants.get(i)[0] = ants.get(i)[0] % X;
+                ants.get(i)[1] = ants.get(i)[1] % Y;
                 if (ants.get(i)[0] < 0) {
-                    ants.get(i)[0] = ants.get(i)[0] + x;
+                    ants.get(i)[0] = ants.get(i)[0] + X;
                 }
 
                 if (ants.get(i)[1] < 0) {
-                    ants.get(i)[1] = ants.get(i)[1] + y;
+                    ants.get(i)[1] = ants.get(i)[1] + Y;
                 }
                 table[ants.get(i)[0]][ants.get(i)[1]] = (char) (i + 48);
 
