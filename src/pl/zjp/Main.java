@@ -38,7 +38,7 @@ public class Main {
         char[][] table = new char[X][Y];
 
 
-        table = setSpacesInTable(table);
+        setSpacesInTable(table);
 
         int numberOfAnts = 3;
         int[] coverage = new int[numberOfAnts];
@@ -95,13 +95,12 @@ public class Main {
         }
     }
 
-    private static char[][] setSpacesInTable(char[][] table) {
+    private static void setSpacesInTable(char[][] table) {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 table[i][j] = ' ';
             }
         }
-        return table;
     }
 
     private static void setPosibilities(int numberOfAnts, List<Ant> ants, int[] lastMove, char[][] table) {
