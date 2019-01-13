@@ -35,9 +35,17 @@ public class Main {
         int y = 60;
         List<int[]> ants = new ArrayList<>();
 
-
         char[][] table = new char[x][y];
-        boolean possible0 = false, possible1 = false, possible2 = false, possible3 = false, possible4 = false, possible5 = false, possible6 = false, possible7 = false;
+
+        boolean possible0 = false;
+        boolean possible1 = false;
+        boolean possible2 = false;
+        boolean possible3 = false;
+        boolean possible4 = false;
+        boolean possible5 = false;
+        boolean possible6 = false;
+        boolean possible7 = false;
+
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 table[i][j] = ' ';
