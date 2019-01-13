@@ -9,7 +9,7 @@ import java.util.Random;
 import static java.lang.System.out;
 
 
-public class Main {
+final class Main {
     public static final String ANSI_RESET = "\u001B[0m";
 
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
@@ -36,6 +36,9 @@ public class Main {
     private static final int MOVE_BACK_LEFT = 5;
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
+
+    private Main() {
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> colors = addColors();
@@ -153,17 +156,10 @@ public class Main {
                 possibilities[MOVE_FORWARD_LEFT] = true;
             }
 
-
-            boolean moved = false;
-            while (!moved) {
-                moved = changePosition(possibilities, ants, lastMove, i);
-
-            }
+            changePosition(possibilities, ants, lastMove, i);
             setAntsPosition(ants, i);
 
-
             table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSII_VALUE_OF_DIGIT);
-
         }
     }
 
@@ -178,52 +174,44 @@ public class Main {
         }
     }
 
-    private static boolean changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
+    private static void changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
         Random random = new Random();
+        boolean moved = false;
+        while (!moved) {
+            int rand = random.nextInt(NUMBER_OF_POSSIBILITIES);
+            lastMove[i] = rand;
 
-        int rand = random.nextInt(NUMBER_OF_POSSIBILITIES);
-        lastMove[i] = rand;
+            if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
+                ants.get(i).setPositionX(ants.get(i).getPositionX() - 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_FORWARD_RIGHT, rand, possibilities[MOVE_FORWARD_RIGHT])) {
+                ants.get(i).setPositionX(ants.get(i).getPositionX() - 1);
+                ants.get(i).setPositionY(ants.get(i).getPositionY() + 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_RIGHT, rand, possibilities[MOVE_RIGHT])) {
+                ants.get(i).setPositionY(ants.get(i).getPositionY() + 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_BACK_RIGHT, rand, possibilities[MOVE_BACK_RIGHT])) {
+                ants.get(i).setPositionX(ants.get(i).getPositionX() + 1);
+                ants.get(i).setPositionY(ants.get(i).getPositionY() + 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_BACK, rand, possibilities[MOVE_BACK])) {
+                ants.get(i).setPositionX(ants.get(i).getPositionX() + 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_BACK_LEFT, rand, possibilities[MOVE_BACK_LEFT])) {
+                ants.get(i).setPositionX(ants.get(i).getPositionX() + 1);
+                ants.get(i).setPositionY(ants.get(i).getPositionY() - 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_LEFT, rand, possibilities[MOVE_LEFT])) {
+                ants.get(i).setPositionY(ants.get(i).getPositionY() - 1);
+                moved = true;
+            } else if (isMovePossible(MOVE_FORWARD_LEFT, rand, possibilities[MOVE_FORWARD_LEFT])) {
+                ants.get(i).setPositionX(ants.get(i).getPositionX() - 1);
+                ants.get(i).setPositionY(ants.get(i).getPositionY() - 1);
+                moved = true;
 
-        if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
-            return true;
+            }
         }
-        else if (isMovePossible(MOVE_FORWARD_RIGHT, rand, possibilities[MOVE_FORWARD_RIGHT])) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
-            ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
-            return true;
-        }
-        else if (isMovePossible(MOVE_RIGHT, rand, possibilities[MOVE_RIGHT])) {
-            ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
-            return true;
-        }
-        else if (isMovePossible(MOVE_BACK_RIGHT, rand, possibilities[MOVE_BACK_RIGHT])) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
-            ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
-            return true;
-        }
-        else if (isMovePossible(MOVE_BACK, rand, possibilities[MOVE_BACK])) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
-            return true;
-        }
-        else if (isMovePossible(MOVE_BACK_LEFT, rand, possibilities[MOVE_BACK_LEFT])) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
-            ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
-            return true;
-
-        }
-        else if (isMovePossible(MOVE_LEFT, rand, possibilities[MOVE_LEFT])) {
-            ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
-            return true;
-
-        }
-        else if (isMovePossible(MOVE_FORWARD_LEFT, rand, possibilities[MOVE_FORWARD_LEFT])) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
-            ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
-            return true;
-
-        }
-        return false;
     }
 
     private static boolean isMovePossible(int value, int rand, boolean possibility) {
