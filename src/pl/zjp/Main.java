@@ -1,7 +1,10 @@
 package pl.zjp;
 
+
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class Main {
@@ -23,7 +26,7 @@ public class Main {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-
+    
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> colors = new ArrayList<>();
         colors.add(ANSI_RED_BACKGROUND);
