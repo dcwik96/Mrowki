@@ -20,6 +20,22 @@ public class Main {
 
     private static final int X = 30;
     private static final int Y = 60;
+    private static final int NUMBER_OF_ANTS = 3;
+    private static final double MAX_SUM_OF_COVERAGE_AVG = 100.0;
+    private static final int THREAD_SLEEP_TIME = 200;
+    private static final int DIGIT_RADIX = 10;
+    private static final int NUMBER_OF_POSSIBILITIES = 8;
+    private static final int ANSII_VALUE_OF_DIGIT = 48;
+    private static final int PERCENTAGE_MULTIPLIER = 100;
+
+    private static final int MOVE_FORWARD = 0;
+    private static final int MOVE_FORWARD_RIGHT = 1;
+    private static final int MOVE_RIGHT = 2;
+    private static final int MOVE_BACK_RIGHT = 3;
+    private static final int MOVE_BACK = 4;
+    private static final int MOVE_BACK_LEFT = 5;
+    private static final int MOVE_LEFT = 6;
+    private static final int MOVE_FORWARD_LEFT = 7;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> colors = addColors();
@@ -29,7 +45,7 @@ public class Main {
 
         setSpacesInTable(table);
 
-        int numberOfAnts = 3;
+        int numberOfAnts = NUMBER_OF_ANTS;
         int[] coverage = new int[numberOfAnts];
 
 
@@ -40,7 +56,7 @@ public class Main {
             int newY = random.nextInt(Y);
             if (table[newX][newY] == ' ') {
                 ants.add(new Ant(newX, newY));
-                table[newX][newY] = Character.forDigit(i, 10);
+                table[newX][newY] = Character.forDigit(i, DIGIT_RADIX);
 
             }
         }
@@ -48,13 +64,13 @@ public class Main {
 
         double sumOfAverages = 0.0;
 
-        while (sumOfAverages != 100.0) {
-            Thread.sleep(200);
+        while (sumOfAverages != MAX_SUM_OF_COVERAGE_AVG) {
+            Thread.sleep(THREAD_SLEEP_TIME);
 
             startMovesDependingOnSystem();
 
             setColorsAndReturnCoverageValue(table, colors, coverage);
-            
+
 
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
@@ -74,8 +90,8 @@ public class Main {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 if (table[i][j] != ' ') {
-                    out.print(colors.get(Character.digit(table[i][j], 10)) + " " + ANSI_RESET);
-                    coverage[Character.digit(table[i][j], 10)]++;
+                    out.print(colors.get(Character.digit(table[i][j], DIGIT_RADIX)) + " " + ANSI_RESET);
+                    coverage[Character.digit(table[i][j], DIGIT_RADIX)]++;
                 } else {
                     out.print(table[i][j]);
                 }
@@ -93,48 +109,48 @@ public class Main {
     }
 
     private static void setPosibilities(int numberOfAnts, List<Ant> ants, int[] lastMove, char[][] table) {
-        boolean[] possibilities = new boolean[8];
+        boolean[] possibilities = new boolean[NUMBER_OF_POSSIBILITIES];
 
         for (int i = 0; i < numberOfAnts; i++) {
-            if (lastMove[i] == 0) {
-                possibilities[7] = true;
-                possibilities[0] = true;
-                possibilities[1] = true;
+            if (lastMove[i] == MOVE_FORWARD) {
+                possibilities[MOVE_FORWARD_LEFT] = true;
+                possibilities[MOVE_FORWARD] = true;
+                possibilities[MOVE_FORWARD_RIGHT] = true;
             }
-            else if (lastMove[i] == 1) {
-                possibilities[0] = true;
-                possibilities[1] = true;
-                possibilities[2] = true;
+            else if (lastMove[i] == MOVE_FORWARD_RIGHT) {
+                possibilities[MOVE_FORWARD] = true;
+                possibilities[MOVE_FORWARD_RIGHT] = true;
+                possibilities[MOVE_RIGHT] = true;
             }
-            else if (lastMove[i] == 2) {
-                possibilities[1] = true;
-                possibilities[2] = true;
-                possibilities[3] = true;
+            else if (lastMove[i] == MOVE_RIGHT) {
+                possibilities[MOVE_FORWARD_RIGHT] = true;
+                possibilities[MOVE_RIGHT] = true;
+                possibilities[MOVE_BACK_RIGHT] = true;
             }
-            else if (lastMove[i] == 3) {
-                possibilities[2] = true;
-                possibilities[3] = true;
-                possibilities[4] = true;
+            else if (lastMove[i] == MOVE_BACK_RIGHT) {
+                possibilities[MOVE_RIGHT] = true;
+                possibilities[MOVE_BACK_RIGHT] = true;
+                possibilities[MOVE_BACK] = true;
             }
-            else if (lastMove[i] == 4) {
-                possibilities[3] = true;
-                possibilities[4] = true;
-                possibilities[5] = true;
+            else if (lastMove[i] == MOVE_BACK) {
+                possibilities[MOVE_BACK_RIGHT] = true;
+                possibilities[MOVE_BACK] = true;
+                possibilities[MOVE_BACK_LEFT] = true;
             }
-            else if (lastMove[i] == 5) {
-                possibilities[4] = true;
-                possibilities[5] = true;
-                possibilities[6] = true;
+            else if (lastMove[i] == MOVE_BACK_LEFT) {
+                possibilities[MOVE_BACK] = true;
+                possibilities[MOVE_BACK_LEFT] = true;
+                possibilities[MOVE_LEFT] = true;
             }
-            else if (lastMove[i] == 6) {
-                possibilities[5] = true;
-                possibilities[6] = true;
-                possibilities[7] = true;
+            else if (lastMove[i] == MOVE_LEFT) {
+                possibilities[MOVE_BACK_LEFT] = true;
+                possibilities[MOVE_LEFT] = true;
+                possibilities[MOVE_FORWARD_LEFT] = true;
             }
-            else if (lastMove[i] == 7) {
-                possibilities[0] = true;
-                possibilities[6] = true;
-                possibilities[7] = true;
+            else if (lastMove[i] == MOVE_FORWARD_LEFT) {
+                possibilities[MOVE_FORWARD] = true;
+                possibilities[MOVE_LEFT] = true;
+                possibilities[MOVE_FORWARD_LEFT] = true;
             }
 
 
@@ -146,7 +162,7 @@ public class Main {
             setAntsPosition(ants, i);
 
 
-            table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + 48);
+            table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSII_VALUE_OF_DIGIT);
 
         }
     }
@@ -165,43 +181,43 @@ public class Main {
     private static boolean changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
         Random random = new Random();
 
-        int rand = random.nextInt(8);
+        int rand = random.nextInt(NUMBER_OF_POSSIBILITIES);
         lastMove[i] = rand;
 
-        if (isMovePossible(0, rand, possibilities[0])) {
+        if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
             return true;
         }
-        else if (isMovePossible(1, rand, possibilities[1])) {
+        else if (isMovePossible(MOVE_FORWARD_RIGHT, rand, possibilities[MOVE_FORWARD_RIGHT])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
             return true;
         }
-        else if (isMovePossible(2, rand, possibilities[2])) {
+        else if (isMovePossible(MOVE_RIGHT, rand, possibilities[MOVE_RIGHT])) {
             ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
             return true;
         }
-        else if (isMovePossible(3, rand, possibilities[3])) {
+        else if (isMovePossible(MOVE_BACK_RIGHT, rand, possibilities[MOVE_BACK_RIGHT])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
             return true;
         }
-        else if (isMovePossible(4, rand, possibilities[4])) {
+        else if (isMovePossible(MOVE_BACK, rand, possibilities[MOVE_BACK])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
             return true;
         }
-        else if (isMovePossible(5, rand, possibilities[5])) {
+        else if (isMovePossible(MOVE_BACK_LEFT, rand, possibilities[MOVE_BACK_LEFT])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
             return true;
 
         }
-        else if (isMovePossible(6, rand, possibilities[6])) {
+        else if (isMovePossible(MOVE_LEFT, rand, possibilities[MOVE_LEFT])) {
             ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
             return true;
 
         }
-        else if (isMovePossible(7, rand, possibilities[7])) {
+        else if (isMovePossible(MOVE_FORWARD_LEFT, rand, possibilities[MOVE_FORWARD_LEFT])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
             return true;
@@ -235,6 +251,6 @@ public class Main {
 
 
     private static double countAvgCoverage(int placeCovered, int x, int y) {
-        return (double)placeCovered/(x*y) * 100;
+        return (double)placeCovered/(x*y) * PERCENTAGE_MULTIPLIER;
     }
 }
