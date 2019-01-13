@@ -75,7 +75,7 @@ public class Main {
                 sumOfAverages += avg;
             }
 
-            boolean[] possibilities = setPosibilities(numberOfAnts, ants, lastMove, table);
+            setPosibilities(numberOfAnts, ants, lastMove, table);
 
         }
 
@@ -105,7 +105,7 @@ public class Main {
         return table;
     }
 
-    private static boolean[] setPosibilities(int numberOfAnts, List<Ant> ants, int[] lastMove, char[][] table) {
+    private static void setPosibilities(int numberOfAnts, List<Ant> ants, int[] lastMove, char[][] table) {
         boolean[] possibilities = new boolean[8];
 
         for (int i = 0; i < numberOfAnts; i++) {
@@ -168,7 +168,6 @@ public class Main {
             table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + 48);
 
         }
-        return possibilities;
     }
 
     private static boolean changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
