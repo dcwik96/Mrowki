@@ -27,6 +27,9 @@ public class Main {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    private static final int x = 30;
+    private static final int y = 60;
+
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> colors = new ArrayList<>();
         colors.add(ANSI_RED_BACKGROUND);
@@ -34,8 +37,6 @@ public class Main {
         colors.add(ANSI_YELLOW_BACKGROUND);
         colors.add(ANSI_BLUE_BACKGROUND);
         colors.add(ANSI_PURPLE_BACKGROUND);
-        int x = 30;
-        int y = 60;
         List<int[]> ants = new ArrayList<>();
 
         char[][] table = new char[x][y];
