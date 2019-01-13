@@ -169,7 +169,7 @@ public class Main {
 
 
                 boolean moved = false;
-                while (moved == false) {
+                while (!moved) {
                     Random random = new Random();
 
                     int rand = random.nextInt(8);
