@@ -26,7 +26,7 @@ public class Main {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-    
+
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> colors = new ArrayList<>();
         colors.add(ANSI_RED_BACKGROUND);
@@ -71,7 +71,9 @@ public class Main {
         }
         int[] lastMove = new int[numberOfAnts];
 
-        while (true) {
+        double sumOfAverages = 0.0;
+
+        while (sumOfAverages != 100.0) {
             Thread.sleep(200);
 
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
@@ -92,9 +94,12 @@ public class Main {
                 }
                 System.out.println();
             }
+            sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
-                System.out.println("Ant" + i + " coverage: " + ((double) coverage[i] / (x * y)) * 100 + "%");
+                double avg = countAvgCoverage(coverage[i],x,y);
+                System.out.println("Ant" + i + " coverage: " +  avg + "%");
                 coverage[i] = 0;
+                sumOfAverages += avg;
             }
             for (int i = 0; i < numberOfAnts; i++) {
                 if (lastMove[i] == 0) {
@@ -243,5 +248,10 @@ public class Main {
 
             }
         }
+    }
+
+
+    private static double countAvgCoverage(int placeCovered, int x, int y) {
+        return (double)placeCovered/(x*y) * 100;
     }
 }
