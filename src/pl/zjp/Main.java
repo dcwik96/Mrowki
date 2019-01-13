@@ -78,7 +78,7 @@ final class Main {
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
                 double avg = countAvgCoverage(coverage[i], X, Y);
-                out.println("Ant" + i + " coverage: " +  avg + "%");
+                out.println("Ant" + i + " coverage: " + avg + "%");
                 coverage[i] = 0;
                 sumOfAverages += avg;
             }
@@ -86,7 +86,6 @@ final class Main {
             setPosibilities(numberOfAnts, ants, lastMove, table);
 
         }
-
     }
 
     private static void setColorsAndReturnCoverageValue(char[][] table, List<String> colors, int[] coverage) {
@@ -119,38 +118,31 @@ final class Main {
                 possibilities[MOVE_FORWARD_LEFT] = true;
                 possibilities[MOVE_FORWARD] = true;
                 possibilities[MOVE_FORWARD_RIGHT] = true;
-            }
-            else if (lastMove[i] == MOVE_FORWARD_RIGHT) {
+            } else if (lastMove[i] == MOVE_FORWARD_RIGHT) {
                 possibilities[MOVE_FORWARD] = true;
                 possibilities[MOVE_FORWARD_RIGHT] = true;
                 possibilities[MOVE_RIGHT] = true;
-            }
-            else if (lastMove[i] == MOVE_RIGHT) {
+            } else if (lastMove[i] == MOVE_RIGHT) {
                 possibilities[MOVE_FORWARD_RIGHT] = true;
                 possibilities[MOVE_RIGHT] = true;
                 possibilities[MOVE_BACK_RIGHT] = true;
-            }
-            else if (lastMove[i] == MOVE_BACK_RIGHT) {
+            } else if (lastMove[i] == MOVE_BACK_RIGHT) {
                 possibilities[MOVE_RIGHT] = true;
                 possibilities[MOVE_BACK_RIGHT] = true;
                 possibilities[MOVE_BACK] = true;
-            }
-            else if (lastMove[i] == MOVE_BACK) {
+            } else if (lastMove[i] == MOVE_BACK) {
                 possibilities[MOVE_BACK_RIGHT] = true;
                 possibilities[MOVE_BACK] = true;
                 possibilities[MOVE_BACK_LEFT] = true;
-            }
-            else if (lastMove[i] == MOVE_BACK_LEFT) {
+            } else if (lastMove[i] == MOVE_BACK_LEFT) {
                 possibilities[MOVE_BACK] = true;
                 possibilities[MOVE_BACK_LEFT] = true;
                 possibilities[MOVE_LEFT] = true;
-            }
-            else if (lastMove[i] == MOVE_LEFT) {
+            } else if (lastMove[i] == MOVE_LEFT) {
                 possibilities[MOVE_BACK_LEFT] = true;
                 possibilities[MOVE_LEFT] = true;
                 possibilities[MOVE_FORWARD_LEFT] = true;
-            }
-            else if (lastMove[i] == MOVE_FORWARD_LEFT) {
+            } else if (lastMove[i] == MOVE_FORWARD_LEFT) {
                 possibilities[MOVE_FORWARD] = true;
                 possibilities[MOVE_LEFT] = true;
                 possibilities[MOVE_FORWARD_LEFT] = true;
@@ -164,13 +156,13 @@ final class Main {
     }
 
     private static void setAntsPosition(List<Ant> ants, int i) {
-        ants.get(i).setPositionX(ants.get(i).getPositionX()%X);
-        ants.get(i).setPositionY(ants.get(i).getPositionY()%Y);
+        ants.get(i).setPositionX(ants.get(i).getPositionX() % X);
+        ants.get(i).setPositionY(ants.get(i).getPositionY() % Y);
         if (ants.get(i).getPositionX() < 0) {
-            ants.get(i).setPositionX(ants.get(i).getPositionX()+X);
+            ants.get(i).setPositionX(ants.get(i).getPositionX() + X);
         }
         if (ants.get(i).getPositionY() < 0) {
-            ants.get(i).setPositionY(ants.get(i).getPositionY()+Y);
+            ants.get(i).setPositionY(ants.get(i).getPositionY() + Y);
         }
     }
 
@@ -237,8 +229,7 @@ final class Main {
         return colors;
     }
 
-
     private static double countAvgCoverage(int placeCovered, int x, int y) {
-        return (double)placeCovered/(x*y) * PERCENTAGE_MULTIPLIER;
+        return (double) placeCovered / (x * y) * PERCENTAGE_MULTIPLIER;
     }
 }
