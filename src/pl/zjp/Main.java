@@ -64,7 +64,7 @@ public class Main {
 
             startMovesDependingOnSystem();
 
-            coverage = setColorsAndReturnCoverageValue(table, colors, coverage);
+            setColorsAndReturnCoverageValue(table, colors, coverage);
             
 
             sumOfAverages = 0.0;
@@ -81,7 +81,7 @@ public class Main {
 
     }
 
-    private static int[] setColorsAndReturnCoverageValue(char[][] table, List<String> colors, int[] coverage) {
+    private static void setColorsAndReturnCoverageValue(char[][] table, List<String> colors, int[] coverage) {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 if (table[i][j] != ' ') {
@@ -93,7 +93,6 @@ public class Main {
             }
             out.println();
         }
-        return coverage;
     }
 
     private static char[][] setSpacesInTable(char[][] table) {
