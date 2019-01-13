@@ -1,9 +1,8 @@
 package pl.zjp;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
 
 public class Main {
     public static final String ANSI_RESET = "\u001B[0m";
