@@ -37,14 +37,6 @@ public class Main {
         List<Ant> ants = new ArrayList<>();
         char[][] table = new char[X][Y];
 
-        boolean possible0 = false;
-        boolean possible1 = false;
-        boolean possible2 = false;
-        boolean possible3 = false;
-        boolean possible4 = false;
-        boolean possible5 = false;
-        boolean possible6 = false;
-        boolean possible7 = false;
 
         table = setSpacesInTable(table);
 
