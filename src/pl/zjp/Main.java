@@ -179,46 +179,50 @@ public class Main {
         int rand = random.nextInt(8);
         lastMove[i] = rand;
 
-        if (rand == 0 && possibilities[0]) {
+        if (isMovePossible(0, rand, possibilities[0])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
             return true;
         }
-        else if (rand == 1 && possibilities[1]) {
+        else if (isMovePossible(1, rand, possibilities[1])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
             return true;
         }
-        else if (rand == 2 && possibilities[2]) {
+        else if (isMovePossible(2, rand, possibilities[2])) {
             ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
             return true;
         }
-        else if (rand == 3 && possibilities[3]) {
+        else if (isMovePossible(3, rand, possibilities[3])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()+1);
             return true;
         }
-        else if (rand == 4 && possibilities[4]) {
+        else if (isMovePossible(4, rand, possibilities[4])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
             return true;
         }
-        else if (rand == 5 && possibilities[5]) {
+        else if (isMovePossible(5, rand, possibilities[5])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()+1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
             return true;
 
         }
-        else if (rand == 6 && possibilities[6]) {
+        else if (isMovePossible(6, rand, possibilities[6])) {
             ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
             return true;
 
         }
-        else if (rand == 7 && possibilities[7]) {
+        else if (isMovePossible(7, rand, possibilities[7])) {
             ants.get(i).setPositionX(ants.get(i).getPositionX()-1);
             ants.get(i).setPositionY(ants.get(i).getPositionY()-1);
             return true;
 
         }
         return false;
+    }
+
+    private static boolean isMovePossible(int value, int rand, boolean possibility) {
+        return rand == value && possibility;
     }
 
     private static void startMovesDependingOnSystem() throws IOException, InterruptedException {
