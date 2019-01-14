@@ -1,6 +1,5 @@
 package pl.zjp;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,6 @@ final class Main {
         List<Ant> ants = new ArrayList<>();
         char[][] table = new char[X][Y];
 
-
         setSpacesInTable(table);
 
         int numberOfAnts = NUMBER_OF_ANTS;
@@ -54,9 +52,9 @@ final class Main {
 
         for (int i = 0; i < numberOfAnts; i++) {
             Random random = new Random();
-
             int newX = random.nextInt(X);
             int newY = random.nextInt(Y);
+
             if (table[newX][newY] == ' ') {
                 ants.add(new Ant(newX, newY));
                 table[newX][newY] = Character.forDigit(i, DIGIT_RADIX);
@@ -72,8 +70,7 @@ final class Main {
 
             startMovesDependingOnSystem();
 
-            setColorsAndReturnCoverageValue(table, colors, coverage);
-
+            printMapOnConsole(table, colors, coverage);
 
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
@@ -84,11 +81,10 @@ final class Main {
             }
 
             setPosibilities(numberOfAnts, ants, lastMove, table);
-
         }
     }
 
-    private static void setColorsAndReturnCoverageValue(char[][] table, List<String> colors, int[] coverage) {
+    private static void printMapOnConsole(char[][] table, List<String> colors, int[] coverage) {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 if (table[i][j] != ' ') {
