@@ -24,7 +24,7 @@ final class Main {
     private static final int THREAD_SLEEP_TIME = 200;
     private static final int DIGIT_RADIX = 10;
     private static final int NUMBER_OF_POSSIBILITIES = 8;
-    private static final int ANSII_VALUE_OF_DIGIT = 48;
+    private static final int ANSI_VALUE_OF_DIGIT = 48;
     private static final int PERCENTAGE_MULTIPLIER = 100;
 
     private static final int MOVE_FORWARD = 0;
@@ -81,7 +81,7 @@ final class Main {
                 sumOfAverages += avg;
             }
 
-            setPosibilities(ants, lastMove, table);
+            setPossibilities(ants, lastMove, table);
         }
     }
 
@@ -107,7 +107,7 @@ final class Main {
         }
     }
 
-    private static void setPosibilities(List<Ant> ants, int[] lastMove, char[][] table) {
+    private static void setPossibilities(List<Ant> ants, int[] lastMove, char[][] table) {
         boolean[] possibilities = new boolean[NUMBER_OF_POSSIBILITIES];
 
         for (int i = 0; i < ants.size(); i++) {
@@ -148,7 +148,7 @@ final class Main {
             changePosition(possibilities, ants, lastMove, i);
             setAntsPosition(ants, i);
 
-            table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSII_VALUE_OF_DIGIT);
+            table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSI_VALUE_OF_DIGIT);
         }
     }
 
