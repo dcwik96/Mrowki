@@ -1,11 +1,12 @@
 package pl.zjp;
 
+import static java.lang.System.out;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static java.lang.System.out;
 
 
 final class Main {
@@ -36,6 +37,7 @@ final class Main {
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
     private static final Random randomNumberGenerator = new Random();
+
     private Main() {
 
     }
@@ -145,14 +147,14 @@ final class Main {
                 possibilities[MOVE_FORWARD_LEFT] = true;
             }
 
-            changePosition(possibilities, ants, lastMove, i);
-            setAntsPosition(ants, i);
+            makeMove(possibilities, ants, lastMove, i);
+            setCorrectPositionIfAntIsOutOfBound(ants, i);
 
             table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSI_VALUE_OF_DIGIT);
         }
     }
 
-    private static void setAntsPosition(List<Ant> ants, int i) {
+    private static void setCorrectPositionIfAntIsOutOfBound(List<Ant> ants, int i) {
         ants.get(i).setPositionX(ants.get(i).getPositionX() % X);
         ants.get(i).setPositionY(ants.get(i).getPositionY() % Y);
         if (ants.get(i).getPositionX() < 0) {
@@ -163,7 +165,7 @@ final class Main {
         }
     }
 
-    private static void changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
+    private static void makeMove(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
         boolean moved = false;
         while (!moved) {
             int rand = randomNumberGenerator.nextInt(NUMBER_OF_POSSIBILITIES);
