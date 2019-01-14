@@ -44,7 +44,7 @@ final class Main {
         List<Ant> ants = new ArrayList<>();
         char[][] table = new char[X][Y];
 
-        setSpacesInTable(table);
+        fillArrayWithBlankSpaces(table);
 
         int numberOfAnts = NUMBER_OF_ANTS;
         int[] coverage = new int[numberOfAnts];
@@ -98,7 +98,7 @@ final class Main {
         }
     }
 
-    private static void setSpacesInTable(char[][] table) {
+    private static void fillArrayWithBlankSpaces(char[][] table) {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 table[i][j] = ' ';
