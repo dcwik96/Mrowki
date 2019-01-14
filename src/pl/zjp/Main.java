@@ -35,8 +35,9 @@ final class Main {
     private static final int MOVE_BACK_LEFT = 5;
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
-
+    private static Random randomNumberGenerator = new Random();
     private Main() {
+
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -80,7 +81,7 @@ final class Main {
                 sumOfAverages += avg;
             }
 
-            setPosibilities(numberOfAnts, ants, lastMove, table);
+            setPosibilities(ants, lastMove, table);
         }
     }
 
@@ -106,10 +107,10 @@ final class Main {
         }
     }
 
-    private static void setPosibilities(int numberOfAnts, List<Ant> ants, int[] lastMove, char[][] table) {
+    private static void setPosibilities(List<Ant> ants, int[] lastMove, char[][] table) {
         boolean[] possibilities = new boolean[NUMBER_OF_POSSIBILITIES];
 
-        for (int i = 0; i < numberOfAnts; i++) {
+        for (int i = 0; i < ants.size(); i++) {
             if (lastMove[i] == MOVE_FORWARD) {
                 possibilities[MOVE_FORWARD_LEFT] = true;
                 possibilities[MOVE_FORWARD] = true;
@@ -163,10 +164,9 @@ final class Main {
     }
 
     private static void changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
-        Random random = new Random();
         boolean moved = false;
         while (!moved) {
-            int rand = random.nextInt(NUMBER_OF_POSSIBILITIES);
+            int rand = randomNumberGenerator.nextInt(NUMBER_OF_POSSIBILITIES);
             lastMove[i] = rand;
 
             if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
