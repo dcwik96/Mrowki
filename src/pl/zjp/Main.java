@@ -75,7 +75,7 @@ final class Main {
 
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
-                double avg = countAvgCoverage(coverage[i], X, Y);
+                double avg = countAvgCoverage(coverage[i]);
                 out.println("Ant" + i + " coverage: " + avg + "%");
                 coverage[i] = 0;
                 sumOfAverages += avg;
@@ -225,7 +225,7 @@ final class Main {
         return colors;
     }
 
-    private static double countAvgCoverage(int placeCovered, int x, int y) {
-        return (double) placeCovered / (x * y) * PERCENTAGE_MULTIPLIER;
+    private static double countAvgCoverage(int placeCovered) {
+        return (double) placeCovered / (X * Y) * PERCENTAGE_MULTIPLIER;
     }
 }
