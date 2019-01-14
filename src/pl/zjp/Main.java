@@ -35,7 +35,7 @@ final class Main {
     private static final int MOVE_BACK_LEFT = 5;
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
-    private static Random randomNumberGenerator = new Random();
+    private static final Random randomNumberGenerator = new Random();
     private Main() {
 
     }
