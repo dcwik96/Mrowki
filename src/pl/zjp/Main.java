@@ -9,7 +9,7 @@ import java.util.Random;
 
 
 
-final class Main {
+public final class Main {
     private static final String ANSI_RESET = "\u001B[0m";
 
     private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
@@ -38,7 +38,7 @@ final class Main {
     private static final int MOVE_FORWARD_LEFT = 7;
     private static final Random randomNumberGenerator = new Random();
 
-    private Main() {
+    public Main() {
 
     }
 
