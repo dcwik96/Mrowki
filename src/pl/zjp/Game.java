@@ -8,8 +8,8 @@ import java.util.Random;
 import static java.lang.System.out;
 
 public class Game {
-    private static final int X = 10;
-    private static final int Y = 10;
+    private static final int X = 30;
+    private static final int Y = 60;
 
     private static final String ANSI_RESET = "\u001B[0m";
 
@@ -29,7 +29,6 @@ public class Game {
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
 
-    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
 
     private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -42,11 +41,10 @@ public class Game {
     private char[][] table;
     private int numberOfAnts;
     private int[] coverage;
-
-    public Game() {
-    }
+    private Random randomNumberGenerator;
 
     public Game(int numberOfAnts) {
+        randomNumberGenerator = new Random();
         this.numberOfAnts = numberOfAnts;
         this.colors = addColors();
         this.ants = new ArrayList<>();
@@ -54,20 +52,15 @@ public class Game {
         this.coverage = new int[numberOfAnts];
     }
 
-    public final boolean playGame() throws InterruptedException, IOException {
+    public final void run() throws InterruptedException, IOException {
         fillArrayWithBlankSpaces();
 
-        for (int i = 0; i < numberOfAnts; i++) {
-            Random random = new Random();
-            int newX = random.nextInt(table.length);
-            int newY = random.nextInt(table[0].length);
+        setPositionOfAnts();
 
-            if (table[newX][newY] == ' ') {
-                ants.add(new Ant(newX, newY));
-                table[newX][newY] = Character.forDigit(i, DIGIT_RADIX);
+        playGame();
+    }
 
-            }
-        }
+    private void playGame() throws InterruptedException, IOException {
         int[] lastMove = new int[numberOfAnts];
 
         double sumOfAverages = 0.0;
@@ -76,21 +69,35 @@ public class Game {
             Thread.sleep(THREAD_SLEEP_TIME);
 
             startMovesDependingOnSystem();
-
             printMapOnConsole();
-
-            sumOfAverages = 0.0;
-            for (int i = 0; i < numberOfAnts; i++) {
-                double avg = countAvgCoverage(coverage[i]);
-                out.println("Ant" + i + " coverage: " + avg + "%");
-                coverage[i] = 0;
-                sumOfAverages += avg;
-            }
-
+            sumOfAverages = countSumOfAverages();
             setPossibilities(lastMove);
         }
+    }
 
-        return false;
+    private double countSumOfAverages() {
+        double sumOfAverages;
+        sumOfAverages = 0.0;
+        for (int i = 0; i < numberOfAnts; i++) {
+            double avg = countAvgCoverage(coverage[i]);
+            out.println("Ant" + i + " coverage: " + avg + "%");
+            coverage[i] = 0;
+            sumOfAverages += avg;
+        }
+        return sumOfAverages;
+    }
+
+    private void setPositionOfAnts() {
+        for (int i = 0; i < numberOfAnts; i++) {
+            int newX = randomNumberGenerator.nextInt(table.length);
+            int newY = randomNumberGenerator.nextInt(table[0].length);
+
+            if (table[newX][newY] == ' ') {
+                ants.add(new Ant(newX, newY));
+                table[newX][newY] = Character.forDigit(i, DIGIT_RADIX);
+
+            }
+        }
     }
 
     private boolean isMovePossible(int value, int rand, boolean possibility) {
@@ -111,7 +118,7 @@ public class Game {
     private void makeMove(boolean[] possibilities, int[] lastMove, int i) {
         boolean moved = false;
         while (!moved) {
-            int rand = RANDOM_NUMBER_GENERATOR.nextInt(NUMBER_OF_POSSIBILITIES);
+            int rand = randomNumberGenerator.nextInt(NUMBER_OF_POSSIBILITIES);
             lastMove[i] = rand;
 
             if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
