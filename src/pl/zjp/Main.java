@@ -18,9 +18,9 @@ public final class Main {
     private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
     private static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 
-    private static final int X = 30;
-    private static final int Y = 60;
-    private static final int NUMBER_OF_ANTS = 3;
+    private static final int X = 15;
+    private static final int Y = 70;
+    private static final int NUMBER_OF_ANTS = 5;      // range of ants 1-5
     private static final double MAX_SUM_OF_COVERAGE_AVG = 100.0;
     private static final int THREAD_SLEEP_TIME = 200;
     private static final int DIGIT_RADIX = 10;
