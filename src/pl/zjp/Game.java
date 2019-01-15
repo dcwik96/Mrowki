@@ -49,7 +49,7 @@ public class Game {
     }
 
     public final void playGame() throws InterruptedException, IOException {
-        fillArrayWithBlankSpaces(table);
+        fillArrayWithBlankSpaces();
 
         for (int i = 0; i < numberOfAnts; i++) {
             Random random = new Random();
@@ -71,7 +71,7 @@ public class Game {
 
             startMovesDependingOnSystem();
 
-            printMapOnConsole(table, colors, coverage);
+            printMapOnConsole();
 
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
@@ -81,7 +81,7 @@ public class Game {
                 sumOfAverages += avg;
             }
 
-            setPossibilities(ants, lastMove, table);
+            setPossibilities(lastMove);
         }
 
     }
@@ -90,7 +90,7 @@ public class Game {
         return rand == value && possibility;
     }
 
-    private void setCorrectPositionIfAntIsOutOfBound(List<Ant> ants, int i) {
+    private void setCorrectPositionIfAntIsOutOfBound(int i) {
         ants.get(i).setPositionX(ants.get(i).getPositionX() % table.length);
         ants.get(i).setPositionY(ants.get(i).getPositionY() % table[0].length);
         if (ants.get(i).getPositionX() < 0) {
@@ -101,7 +101,7 @@ public class Game {
         }
     }
 
-    private void makeMove(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
+    private void makeMove(boolean[] possibilities, int[] lastMove, int i) {
         boolean moved = false;
         while (!moved) {
             int rand = RANDOM_NUMBER_GENERATOR.nextInt(NUMBER_OF_POSSIBILITIES);
@@ -140,7 +140,7 @@ public class Game {
         }
     }
 
-    private void setPossibilities(List<Ant> ants, int[] lastMove, char[][] table) {
+    private void setPossibilities(int[] lastMove) {
         boolean[] possibilities = new boolean[NUMBER_OF_POSSIBILITIES];
 
         for (int i = 0; i < ants.size(); i++) {
@@ -178,8 +178,8 @@ public class Game {
                 possibilities[MOVE_FORWARD_LEFT] = true;
             }
 
-            makeMove(possibilities, ants, lastMove, i);
-            setCorrectPositionIfAntIsOutOfBound(ants, i);
+            makeMove(possibilities, lastMove, i);
+            setCorrectPositionIfAntIsOutOfBound(i);
 
             table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSI_VALUE_OF_DIGIT);
         }
@@ -189,7 +189,7 @@ public class Game {
         return (double) placeCovered / (table.length * table[0].length) * PERCENTAGE_MULTIPLIER;
     }
 
-    private void printMapOnConsole(char[][] table, List<String> colors, int[] coverage) {
+    private void printMapOnConsole() {
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[0].length; j++) {
                 if (table[i][j] != ' ') {
@@ -223,7 +223,7 @@ public class Game {
         return addedColors;
     }
 
-    private void fillArrayWithBlankSpaces(char[][] table) {
+    private void fillArrayWithBlankSpaces() {
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[0].length; j++) {
                 table[i][j] = ' ';
