@@ -34,11 +34,11 @@ public class Game {
     private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
     private static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 
-    List<String> colors;
-    List<Ant> ants;
-    char[][] table;
-    int numberOfAnts;
-    int[] coverage;
+    private List<String> colors;
+    private List<Ant> ants;
+    private char[][] table;
+    private int numberOfAnts;
+    private int[] coverage;
 
     public Game(int numberOfAnts, char[][] table) {
         this.numberOfAnts = numberOfAnts;
@@ -230,5 +230,4 @@ public class Game {
             }
         }
     }
-
 }
