@@ -26,7 +26,7 @@ public class Game {
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
 
-    private static final Random randomNumberGenerator = new Random();
+    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
 
     private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -104,7 +104,7 @@ public class Game {
     private void makeMove(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
         boolean moved = false;
         while (!moved) {
-            int rand = randomNumberGenerator.nextInt(NUMBER_OF_POSSIBILITIES);
+            int rand = RANDOM_NUMBER_GENERATOR.nextInt(NUMBER_OF_POSSIBILITIES);
             lastMove[i] = rand;
 
             if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
