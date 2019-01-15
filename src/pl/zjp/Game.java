@@ -29,7 +29,6 @@ public class Game {
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
 
-    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
 
     private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -42,8 +41,10 @@ public class Game {
     private char[][] table;
     private int numberOfAnts;
     private int[] coverage;
+    private Random randomNumberGenerator;
 
     public Game(int numberOfAnts) {
+        randomNumberGenerator = new Random();
         this.numberOfAnts = numberOfAnts;
         this.colors = addColors();
         this.ants = new ArrayList<>();
@@ -88,9 +89,8 @@ public class Game {
 
     private void setPositionOfAnts() {
         for (int i = 0; i < numberOfAnts; i++) {
-            Random random = new Random();
-            int newX = random.nextInt(table.length);
-            int newY = random.nextInt(table[0].length);
+            int newX = randomNumberGenerator.nextInt(table.length);
+            int newY = randomNumberGenerator.nextInt(table[0].length);
 
             if (table[newX][newY] == ' ') {
                 ants.add(new Ant(newX, newY));
@@ -118,7 +118,7 @@ public class Game {
     private void makeMove(boolean[] possibilities, int[] lastMove, int i) {
         boolean moved = false;
         while (!moved) {
-            int rand = RANDOM_NUMBER_GENERATOR.nextInt(NUMBER_OF_POSSIBILITIES);
+            int rand = randomNumberGenerator.nextInt(NUMBER_OF_POSSIBILITIES);
             lastMove[i] = rand;
 
             if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
