@@ -51,9 +51,42 @@ public class Game {
         this.coverage = new int[numberOfAnts];
     }
 
-    public final void playGame() throws InterruptedException, IOException {
+    public final void run() throws InterruptedException, IOException {
         fillArrayWithBlankSpaces();
 
+        setPositionOfAnts();
+
+        playGame();
+    }
+
+    private void playGame() throws InterruptedException, IOException {
+        int[] lastMove = new int[numberOfAnts];
+
+        double sumOfAverages = 0.0;
+
+        while (sumOfAverages != MAX_SUM_OF_COVERAGE_AVG) {
+            Thread.sleep(THREAD_SLEEP_TIME);
+
+            startMovesDependingOnSystem();
+            printMapOnConsole();
+            sumOfAverages = countSumOfAverages();
+            setPossibilities(lastMove);
+        }
+    }
+
+    private double countSumOfAverages() {
+        double sumOfAverages;
+        sumOfAverages = 0.0;
+        for (int i = 0; i < numberOfAnts; i++) {
+            double avg = countAvgCoverage(coverage[i]);
+            out.println("Ant" + i + " coverage: " + avg + "%");
+            coverage[i] = 0;
+            sumOfAverages += avg;
+        }
+        return sumOfAverages;
+    }
+
+    private void setPositionOfAnts() {
         for (int i = 0; i < numberOfAnts; i++) {
             Random random = new Random();
             int newX = random.nextInt(table.length);
@@ -65,28 +98,6 @@ public class Game {
 
             }
         }
-        int[] lastMove = new int[numberOfAnts];
-
-        double sumOfAverages = 0.0;
-
-        while (sumOfAverages != MAX_SUM_OF_COVERAGE_AVG) {
-            Thread.sleep(THREAD_SLEEP_TIME);
-
-            startMovesDependingOnSystem();
-
-            printMapOnConsole();
-
-            sumOfAverages = 0.0;
-            for (int i = 0; i < numberOfAnts; i++) {
-                double avg = countAvgCoverage(coverage[i]);
-                out.println("Ant" + i + " coverage: " + avg + "%");
-                coverage[i] = 0;
-                sumOfAverages += avg;
-            }
-
-            setPossibilities(lastMove);
-        }
-
     }
 
     private boolean isMovePossible(int value, int rand, boolean possibility) {
