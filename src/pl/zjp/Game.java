@@ -8,8 +8,8 @@ import java.util.Random;
 import static java.lang.System.out;
 
 public class Game {
-    private static final int X = 30;
-    private static final int Y = 60;
+    private static final int X = 10;
+    private static final int Y = 10;
 
     private static final String ANSI_RESET = "\u001B[0m";
 
@@ -43,6 +43,9 @@ public class Game {
     private int numberOfAnts;
     private int[] coverage;
 
+    public Game() {
+    }
+
     public Game(int numberOfAnts) {
         this.numberOfAnts = numberOfAnts;
         this.colors = addColors();
@@ -51,7 +54,7 @@ public class Game {
         this.coverage = new int[numberOfAnts];
     }
 
-    public final void playGame() throws InterruptedException, IOException {
+    public final boolean playGame() throws InterruptedException, IOException {
         fillArrayWithBlankSpaces();
 
         for (int i = 0; i < numberOfAnts; i++) {
@@ -87,6 +90,7 @@ public class Game {
             setPossibilities(lastMove);
         }
 
+        return false;
     }
 
     private boolean isMovePossible(int value, int rand, boolean possibility) {
