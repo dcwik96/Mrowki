@@ -70,7 +70,7 @@ public class Game {
         while (sumOfAverages != MAX_SUM_OF_COVERAGE_AVG) {
             Thread.sleep(THREAD_SLEEP_TIME);
 
-            startMovesDependingOnSystem();
+            clearConsole();
             printMapOnConsole();
             sumOfAverages = countSumOfAverages();
             setPossibilities(lastMove);
@@ -219,13 +219,17 @@ public class Game {
         }
     }
 
-    private void startMovesDependingOnSystem() throws IOException, InterruptedException {
-        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+    private void clearConsole() throws IOException, InterruptedException {
+        if (isGivenOS("windows")) {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         }
-        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+        if (isGivenOS("linux")) {
             out.print("\033[H\033[2J");
         }
+    }
+
+    private boolean isGivenOS(String system) {
+        return System.getProperty("os.name").toLowerCase().contains(system);
     }
 
 
