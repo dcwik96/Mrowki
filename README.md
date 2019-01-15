@@ -19,3 +19,5 @@ Nie wiem jak skonfigurowac, realtime rowniez
 
 ### SonarLint plugin od Intellij
 Realtime, fajne info daje po najechaniu, fajowe
+
+[![BCH compliance](https://bettercodehub.com/edge/badge/dcwik96/Mrowki?branch=master)](https://bettercodehub.com/)
