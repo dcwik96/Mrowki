@@ -8,8 +8,8 @@ import java.util.Random;
 import static java.lang.System.out;
 
 public class Game {
-    private static final int X = 30;
-    private static final int Y = 60;
+    private static final int X = 10;
+    private static final int Y = 10;
 
     private static final String ANSI_RESET = "\u001B[0m";
 
@@ -52,12 +52,14 @@ public class Game {
         this.coverage = new int[numberOfAnts];
     }
 
-    public final void run() throws InterruptedException, IOException {
+    public final boolean run() throws InterruptedException, IOException {
         fillArrayWithBlankSpaces();
 
         setPositionOfAnts();
 
         playGame();
+
+        return false;
     }
 
     private void playGame() throws InterruptedException, IOException {

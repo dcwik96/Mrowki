@@ -11,7 +11,7 @@ public class TestAnts {
 
     @Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
-    
+
     @Test
     public void textMainIsRunning() throws IOException, InterruptedException {
         exit.expectSystemExitWithStatus(0);
