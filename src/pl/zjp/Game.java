@@ -8,6 +8,9 @@ import java.util.Random;
 import static java.lang.System.out;
 
 public class Game {
+    private static final int X = 30;
+    private static final int Y = 60;
+
     private static final String ANSI_RESET = "\u001B[0m";
 
     private static final double MAX_SUM_OF_COVERAGE_AVG = 100.0;
@@ -40,11 +43,11 @@ public class Game {
     private int numberOfAnts;
     private int[] coverage;
 
-    public Game(int numberOfAnts, char[][] table) {
+    public Game(int numberOfAnts) {
         this.numberOfAnts = numberOfAnts;
         this.colors = addColors();
         this.ants = new ArrayList<>();
-        this.table = table;
+        this.table = new char[X][Y];
         this.coverage = new int[numberOfAnts];
     }
 
