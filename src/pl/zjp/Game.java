@@ -48,7 +48,7 @@ public class Game {
         this.coverage = new int[numberOfAnts];
     }
 
-    public void playGame() throws InterruptedException, IOException {
+    public final void playGame() throws InterruptedException, IOException {
         fillArrayWithBlankSpaces(table);
 
         for (int i = 0; i < numberOfAnts; i++) {
