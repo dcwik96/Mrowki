@@ -1,22 +1,22 @@
 package pl.zjp;
 
+import static java.lang.System.out;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static java.lang.System.out;
 
 
-final class Main {
-    public static final String ANSI_RESET = "\u001B[0m";
+public final class Main {
+    private static final String ANSI_RESET = "\u001B[0m";
 
-    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
-    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    private static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    private static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 
     private static final int X = 30;
     private static final int Y = 60;
@@ -25,7 +25,7 @@ final class Main {
     private static final int THREAD_SLEEP_TIME = 200;
     private static final int DIGIT_RADIX = 10;
     private static final int NUMBER_OF_POSSIBILITIES = 8;
-    private static final int ANSII_VALUE_OF_DIGIT = 48;
+    private static final int ANSI_VALUE_OF_DIGIT = 48;
     private static final int PERCENTAGE_MULTIPLIER = 100;
 
     private static final int MOVE_FORWARD = 0;
@@ -36,8 +36,10 @@ final class Main {
     private static final int MOVE_BACK_LEFT = 5;
     private static final int MOVE_LEFT = 6;
     private static final int MOVE_FORWARD_LEFT = 7;
+    private static final Random randomNumberGenerator = new Random();
 
-    private Main() {
+    public Main() {
+
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -45,8 +47,7 @@ final class Main {
         List<Ant> ants = new ArrayList<>();
         char[][] table = new char[X][Y];
 
-
-        setSpacesInTable(table);
+        fillArrayWithBlankSpaces(table);
 
         int numberOfAnts = NUMBER_OF_ANTS;
         int[] coverage = new int[numberOfAnts];
@@ -54,9 +55,9 @@ final class Main {
 
         for (int i = 0; i < numberOfAnts; i++) {
             Random random = new Random();
-
             int newX = random.nextInt(X);
             int newY = random.nextInt(Y);
+
             if (table[newX][newY] == ' ') {
                 ants.add(new Ant(newX, newY));
                 table[newX][newY] = Character.forDigit(i, DIGIT_RADIX);
@@ -72,23 +73,21 @@ final class Main {
 
             startMovesDependingOnSystem();
 
-            setColorsAndReturnCoverageValue(table, colors, coverage);
-
+            printMapOnConsole(table, colors, coverage);
 
             sumOfAverages = 0.0;
             for (int i = 0; i < numberOfAnts; i++) {
-                double avg = countAvgCoverage(coverage[i], X, Y);
+                double avg = countAvgCoverage(coverage[i]);
                 out.println("Ant" + i + " coverage: " + avg + "%");
                 coverage[i] = 0;
                 sumOfAverages += avg;
             }
 
-            setPosibilities(numberOfAnts, ants, lastMove, table);
-
+            setPossibilities(ants, lastMove, table);
         }
     }
 
-    private static void setColorsAndReturnCoverageValue(char[][] table, List<String> colors, int[] coverage) {
+    private static void printMapOnConsole(char[][] table, List<String> colors, int[] coverage) {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 if (table[i][j] != ' ') {
@@ -102,7 +101,7 @@ final class Main {
         }
     }
 
-    private static void setSpacesInTable(char[][] table) {
+    private static void fillArrayWithBlankSpaces(char[][] table) {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 table[i][j] = ' ';
@@ -110,10 +109,10 @@ final class Main {
         }
     }
 
-    private static void setPosibilities(int numberOfAnts, List<Ant> ants, int[] lastMove, char[][] table) {
+    private static void setPossibilities(List<Ant> ants, int[] lastMove, char[][] table) {
         boolean[] possibilities = new boolean[NUMBER_OF_POSSIBILITIES];
 
-        for (int i = 0; i < numberOfAnts; i++) {
+        for (int i = 0; i < ants.size(); i++) {
             if (lastMove[i] == MOVE_FORWARD) {
                 possibilities[MOVE_FORWARD_LEFT] = true;
                 possibilities[MOVE_FORWARD] = true;
@@ -148,14 +147,14 @@ final class Main {
                 possibilities[MOVE_FORWARD_LEFT] = true;
             }
 
-            changePosition(possibilities, ants, lastMove, i);
-            setAntsPosition(ants, i);
+            makeMove(possibilities, ants, lastMove, i);
+            setCorrectPositionIfAntIsOutOfBound(ants, i);
 
-            table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSII_VALUE_OF_DIGIT);
+            table[ants.get(i).getPositionX()][ants.get(i).getPositionY()] = (char) (i + ANSI_VALUE_OF_DIGIT);
         }
     }
 
-    private static void setAntsPosition(List<Ant> ants, int i) {
+    private static void setCorrectPositionIfAntIsOutOfBound(List<Ant> ants, int i) {
         ants.get(i).setPositionX(ants.get(i).getPositionX() % X);
         ants.get(i).setPositionY(ants.get(i).getPositionY() % Y);
         if (ants.get(i).getPositionX() < 0) {
@@ -166,11 +165,10 @@ final class Main {
         }
     }
 
-    private static void changePosition(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
-        Random random = new Random();
+    private static void makeMove(boolean[] possibilities, List<Ant> ants, int[] lastMove, int i) {
         boolean moved = false;
         while (!moved) {
-            int rand = random.nextInt(NUMBER_OF_POSSIBILITIES);
+            int rand = randomNumberGenerator.nextInt(NUMBER_OF_POSSIBILITIES);
             lastMove[i] = rand;
 
             if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
@@ -229,7 +227,7 @@ final class Main {
         return colors;
     }
 
-    private static double countAvgCoverage(int placeCovered, int x, int y) {
-        return (double) placeCovered / (x * y) * PERCENTAGE_MULTIPLIER;
+    private static double countAvgCoverage(int placeCovered) {
+        return (double) placeCovered / (X * Y) * PERCENTAGE_MULTIPLIER;
     }
 }
