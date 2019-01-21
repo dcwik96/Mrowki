@@ -18,7 +18,6 @@ public class Game {
     private static final int DIGIT_RADIX = 10;
     private static final int NUMBER_OF_POSSIBILITIES = 8;
     private static final int ANSI_VALUE_OF_DIGIT = 48;
-    private static final int PERCENTAGE_MULTIPLIER = 100;
 
     private static final int MOVE_FORWARD = 0;
     private static final int MOVE_FORWARD_RIGHT = 1;
@@ -37,7 +36,7 @@ public class Game {
     private static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 
     private List<String> colors;
-    private List<Ant> ants;
+    private List<pl.zjp.Ant> ants;
     private char[][] table;
     private int numberOfAnts;
     private int[] coverage;
@@ -53,7 +52,7 @@ public class Game {
     }
 
     public final boolean run() throws InterruptedException, IOException {
-        fillArrayWithBlankSpaces();
+        table = Utils.fillArrayWithBlankSpaces(table);
 
         setPositionOfAnts();
 
@@ -81,7 +80,7 @@ public class Game {
         double sumOfAverages;
         sumOfAverages = 0.0;
         for (int i = 0; i < numberOfAnts; i++) {
-            double avg = countAvgCoverage(coverage[i]);
+            double avg = Utils.countAvgCoverage(coverage[i],table);
             out.println("Ant" + i + " coverage: " + avg + "%");
             coverage[i] = 0;
             sumOfAverages += avg;
@@ -201,9 +200,7 @@ public class Game {
         }
     }
 
-    private double countAvgCoverage(int placeCovered) {
-        return (double) placeCovered / (table.length * table[0].length) * PERCENTAGE_MULTIPLIER;
-    }
+
 
     private void printMapOnConsole() {
         for (int i = 0; i < table.length; i++) {
@@ -243,11 +240,5 @@ public class Game {
         return addedColors;
     }
 
-    private void fillArrayWithBlankSpaces() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[0].length; j++) {
-                table[i][j] = ' ';
-            }
-        }
-    }
+
 }
