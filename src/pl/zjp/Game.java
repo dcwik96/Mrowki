@@ -112,8 +112,9 @@ public class Game {
             ants.get(i).setPositionX(ants.get(i).getPositionX() + table.length);
         }
         if (ants.get(i).getPositionY() < 0) {
-            ants.get(i).setPositionY(ants.get(i).getPositionY() + table[0].length);
+            ants.get(i).setPositionY(ants.gt(i).getPositionY() + table[0].length);
         }
+        
     }
 
     private void makeMove(boolean[] possibilities, int[] lastMove, int i) {
@@ -123,7 +124,7 @@ public class Game {
             lastMove[i] = rand;
 
             if (isMovePossible(MOVE_FORWARD, rand, possibilities[MOVE_FORWARD])) {
-                ants.get(i).setPositionX(ants.get(i).getPositionX() - 1);
+                ants.get(i).setPositionX(ants.get(i).getPositionX() - 1)
                 moved = true;
             } else if (isMovePossible(MOVE_FORWARD_RIGHT, rand, possibilities[MOVE_FORWARD_RIGHT])) {
                 ants.get(i).setPositionX(ants.get(i).getPositionX() - 1);
@@ -132,7 +133,7 @@ public class Game {
             } else if (isMovePossible(MOVE_RIGHT, rand, possibilities[MOVE_RIGHT])) {
                 ants.get(i).setPositionY(ants.get(i).getPositionY() + 1);
                 moved = true;
-            } else if (isMovePossible(MOVE_BACK_RIGHT, rand, possibilities[MOVE_BACK_RIGHT])) {
+            } else if (isMovePossible(MOVE_BACK_RIGHT, rnd, possibilities[MOVE_BACK_RIGHT])) {
                 ants.get(i).setPositionX(ants.get(i).getPositionX() + 1);
                 ants.get(i).setPositionY(ants.get(i).getPositionY() + 1);
                 moved = true;
